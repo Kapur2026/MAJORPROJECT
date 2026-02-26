@@ -1,0 +1,47 @@
+<% layout("layouts/boilerplate")%>
+<br>
+<div class="row">
+    <div class="col-8 offset-2">
+    <h3>Create New Listing</h3>
+    <form method="POST" action="/listings" novalidate class="needs-validation">
+        <div>
+            <lable for="title" class="form-lable">Title</lable>
+            <input type="text" placeholder="enter title" name="listing[title]" class="form-control" required>
+            <div class="valid-feedback">Title looks good!</div>
+        </div>
+        <br>
+        <div>
+            <lable for="description" class="form-lable">Description</lable>
+            <textarea type="text" placeholder="enter description" name="listing[description]" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please! write description</div>
+        </div>
+        <br>
+        <div>
+            <lable for="image" class="form-lable">Image</lable>
+            <input type="text" placeholder="enter image URL/Link" name="listing[image]" class="form-control">
+        </div>
+        <br>
+        <div>
+            <lable for="location" class="form-lable">Location</lable>
+            <input type="text" placeholder="enter location" name="listing[location]" class="form-control" required>
+            <div class="invalid-feedback">enter location</div>
+        </div>
+        <br>
+        <div>
+            <lable for="country" class="form-lable">Country</lable>
+            <input type="text" placeholder="enter country" name="listing[country]" class="form-control" required>
+            <div class="invalid-feedback">Please! enter country name</div>
+        </div>
+        <br>
+        <div>
+            <lable for="price" class="form-lable">Price</lable>
+            <input placeholder="enter price" name="listing[price]" class="form-control" required>
+            <div class="invalid-feedback">enter price,Please!</div>
+        </div>
+        <br>
+        <button class="btn btn-dark add-btn">Add Listing</button>
+        <br>
+        <br>
+    </form>
+    </div>
+</div>
