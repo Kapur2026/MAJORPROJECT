@@ -1,6 +1,6 @@
 const dns = require('node:dns/promises');
 dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4']);
-require("dotenv").config(); 
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -12,7 +12,7 @@ const ejsMate = require("ejs-mate");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 const session = require('express-session');
-const MongoStore = require("connect-mongo").default; 
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStartegy = require("passport-local");
@@ -33,17 +33,17 @@ async function main() {
     await mongoose.connect(dbUrl);
 }
 
-const store=MongoStore.create({
-    mongoUrl:dbUrl,
-    collectionName:'sessions',
-    crypto:{
-    secret: process.env.SECRET,
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    collectionName: 'sessions',
+    crypto: {
+        secret: process.env.SECRET,
     },
-    touchAfter:24*3600,
+    touchAfter: 24 * 3600,
 });
 
-store.on("error",function(err){
-    console.log("error:",err);
+store.on("error", function (err) {
+    console.log("error:", err);
 });
 
 const sessionOptions = {
@@ -80,12 +80,12 @@ app.use((req, res, next) => {
 });
 
 app.use(session({
-    secret: process.env.SECRET,   
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
-    cookie: { 
-        maxAge: 7*24 * 60 * 60 * 1000  
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000
     }
 }));
 
@@ -161,8 +161,9 @@ const validateReview = (req, res, next) => {
     }
 };
 
+
 //All listing rout
-app.get("/listings",async (req, res) => {
+app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
 });
@@ -178,10 +179,13 @@ app.get("/listings/new", (req, res) => {
 
 app.get("/listings/:id", async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews")
-        .populate("owner");
-    console.log(listing);
-    console.log(listing.reviews);
+    const listing = await Listing.findById(id).populate({
+        path: "reviews",
+        populate: {
+            path: "author",
+        },
+    }).populate("owner");
+
     res.render("listings/show.ejs", { listing });
 });
 
@@ -235,6 +239,7 @@ app.delete("/listings/:id", async (req, res) => {
 app.post("/listings/:id/review", async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
+    newReview.author = req.user._id;
 
     listing.reviews.push(newReview._id);
 
