@@ -5,7 +5,6 @@
 - Add / Edit / Delete Listings
 - Review & Rating System
 - Image Upload
-- Map Integration
 - Responsive UI
 
 ## 🛠 Tech Stack
@@ -16,7 +15,7 @@
 - Bootstrap
 
 ## 🌐 Live Demo
-[Click Here to View Live Project](https://majorporject.onrender.com)
+[Click Here to View Live Project](https://majorporject.onrender.com/listings)
 
 ## 📂 GitHub Repository
-[View Source Code](https://github.com/Kapur2026/MAJORPROJECT)
+[View Source Code](https://github.com/Kapur206/MAJORPROJECT)
